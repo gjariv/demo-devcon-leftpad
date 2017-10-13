@@ -30,12 +30,29 @@ pipeline {
         }
       }
     }
-    stage("Maven") {
+    stage("Publish") {
       steps {
         withMaven(jdk: 'Java 8', maven: 'Maven 3') {
           sh "mvn deploy -DskipTests"
         }
       }
+    }
+  }
+
+  post {
+    unstable {
+      emailext(
+              subject: "UNSTABLE: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+              body: """See <${env.BUILD_URL}>""",
+              recipientProviders: [[$class: 'CulpritsRecipientProvider'], [$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']]
+      )
+    }
+    failure {
+      emailext(
+              subject: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+              body: """See <${env.BUILD_URL}>""",
+              recipientProviders: [[$class: 'CulpritsRecipientProvider'], [$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']]
+      )
     }
   }
 }
