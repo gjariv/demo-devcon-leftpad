@@ -26,6 +26,7 @@ pipeline {
       steps {
         withMaven(jdk: 'Java 8', maven: 'Maven 3') {
           sh "mvn test"
+          sh "mvn org.owasp:dependency-check-maven:2.1.1:check"
         }
       }
     }
