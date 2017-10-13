@@ -7,6 +7,7 @@ pipeline {
     buildDiscarder(logRotator(numToKeepStr: '20'))
     disableConcurrentBuilds()
     timestamps()
+    skipStagesAfterUnstable()
   }
 
   triggers {
@@ -14,9 +15,19 @@ pipeline {
   }
 
   stages {
+    stage("Clean") {
+      steps {
+        sh "mvn clean"
+      }
+    }
+    stage("Test") {
+      steps {
+        sh "mvn test"
+      }
+    }
     stage("Maven") {
       steps {
-        sh "mvn clean deploy"
+        sh "mvn deploy -DskipTests"
       }
     }
   }
