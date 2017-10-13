@@ -6,7 +6,7 @@ pipeline {
   stages {
     stage("Maven") {
       steps {
-        sh "mvn clean package"
+        sh "mvn clean deploy"
       }
     }
   }

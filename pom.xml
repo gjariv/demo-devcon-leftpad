@@ -28,9 +28,22 @@
 
   <repositories>
     <repository>
-      <id>demo-devcon-2017</id>
-      <url>http://artifactory.devcon2017.site/public/</url>
+      <id>central</id>
+      <url>http://artifactory.devcon2017.site/artifactory/public/</url>
       <!-- allow snapshots -->
     </repository>
   </repositories>
+
+  <distributionManagement>
+    <repository>
+      <id>releases</id>
+      <name>demo-devcon-2017-releases</name>
+      <url>http://artifactory.devcon2017.site/artifactory/releases</url>
+    </repository>
+    <snapshotRepository>
+      <id>snapshots</id>
+      <name>demo-devcon-2017-snapshots</name>
+      <url>http://artifactory.devcon2017.site/artifactory/snapshots</url>
+    </snapshotRepository>
+  </distributionManagement>
 </project>
