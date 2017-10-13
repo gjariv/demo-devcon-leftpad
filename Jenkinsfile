@@ -17,17 +17,23 @@ pipeline {
   stages {
     stage("Clean") {
       steps {
-        sh "mvn clean"
+        withMaven(jdk: 'Java 8', maven: 'Maven 3') {
+          sh "mvn clean"
+        }
       }
     }
     stage("Test") {
       steps {
-        sh "mvn test"
+        withMaven(jdk: 'Java 8', maven: 'Maven 3') {
+          sh "mvn test"
+        }
       }
     }
     stage("Maven") {
       steps {
-        sh "mvn deploy -DskipTests"
+        withMaven(jdk: 'Java 8', maven: 'Maven 3') {
+          sh "mvn deploy -DskipTests"
+        }
       }
     }
   }
