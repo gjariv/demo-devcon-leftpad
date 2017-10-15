@@ -23,10 +23,20 @@ pipeline {
       }
     }
     stage("Test") {
-      steps {
-        withMaven(jdk: 'Java 8', maven: 'Maven 3') {
-          sh "mvn test"
-          sh "mvn org.owasp:dependency-check-maven:2.1.1:check"
+      parallel {
+        stage('Unit') {
+          steps {
+            withMaven(jdk: 'Java 8', maven: 'Maven 3') {
+              sh "mvn test"
+            }
+          }
+        }
+        stage('OWASP') {
+          steps {
+            withMaven(jdk: 'Java 8', maven: 'Maven 3') {
+              sh "mvn org.owasp:dependency-check-maven:2.1.1:check"
+            }
+          }
         }
       }
     }
